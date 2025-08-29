@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Egypt Tourism</title>
+  <!-- Lightbox CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet">
+  <style>
+    * {margin:0;padding:0;box-sizing:border-box;font-family:'Roboto',sans-serif;scroll-behavior:smooth;}
+    body {background:#111;color:#fff;}
+
+    /* Navbar */
+    .navbar {width:100%;padding:15px 8%;background:rgba(0,0,0,0.7);display:flex;justify-content:space-between;align-items:center;position:fixed;top:0;z-index:1000;}
+    .navbar .logo img {width:60px;}
+    .navbar ul {list-style:none;display:flex;gap:25px;}
+    .navbar ul li a {text-decoration:none;color:#fff;font-weight:bold;transition:0.3s;}
+    .navbar ul li a:hover {color:#ffd700;}
+
+    /* Hero */
+    .hero {height:100vh;background:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),url('./background.jpg') center/cover no-repeat;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 20px;}
+    .hero h1 {font-size:4rem;color:#ffd700;animation:fadeInDown 2s;}
+    .hero p {margin-top:15px;font-size:1.2rem;max-width:600px;animation:fadeInUp 2s;}
+    @keyframes fadeInDown {0%{opacity:0;transform:translateY(-50px);}100%{opacity:1;transform:translateY(0);}}
+    @keyframes fadeInUp {0%{opacity:0;transform:translateY(50px);}100%{opacity:1;transform:translateY(0);}}
+
+    /* Regions */
+    .regions {padding:80px 8%;text-align:center;}
+    .regions h2 {font-size:2.5rem;margin-bottom:40px;color:#ffd700;}
+    .cards {display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;}
+    .card {background-size:cover;background-position:center;padding:20px;border-radius:12px;height:250px;display:flex;flex-direction:column;justify-content:flex-end;transition:0.3s;cursor:pointer;position:relative;}
+    .card:hover {transform:translateY(-10px);}
+    .card h3 {font-size:1.5rem;color:#ffd700;text-shadow:0 0 10px #000;}
+    .card p {font-size:0.9rem;margin-top:10px;text-shadow:0 0 10px #000;}
+
+    /* Landmarks */
+    .landmarks {padding:80px 8%;text-align:center;}
+    .landmarks h2 {font-size:2.5rem;margin-bottom:40px;color:#ffd700;}
+    .grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:25px;}
+    .box {position:relative;overflow:hidden;border-radius:10px;}
+    .box img {width:100%;height:100%;display:block;border-radius:10px;transition:transform 0.5s;}
+    .overlay {position:absolute;bottom:0;left:0;height:0;width:100%;background:linear-gradient(transparent,rgba(0,0,0,0.9));display:flex;flex-direction:column;justify-content:flex-end;padding:20px;color:#fff;transition:height 0.5s;}
+    .box:hover img {transform:scale(1.1);}
+    .box:hover .overlay {height:100%;}
+    .overlay h3 {color:#ffd700;margin-bottom:10px;}
+
+    /* Footer */
+    footer {text-align:center;padding:20px;background:#000;margin-top:50px;}
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">
+      <img src="./logo.png" alt="Egypt Logo">
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#regions">Regions</a></li>
+        <li><a href="#landmarks">Landmarks</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-text">
+      <h1>Welcome to Egypt</h1>
+      <p>Discover the timeless beauty of Egypt through its pyramids, museums, temples, and the majestic Nile.</p>
+    </div>
+  </section>
+
+  <!-- Regions Section -->
+<!-- ===== Regions Section ===== -->
+<section class="regions" id="regions">
+  <h2>Explore Egypt</h2>
+  <div class="cards">
+    <div class="card" style="background-image:url(./pic-1.png);" onclick="openGallery('desert')">
+      <h3>Desert</h3>
+      <p>Experience the golden dunes and silence of Egypt's vast deserts.</p>
+    </div>
+    <div class="card" style="background-image:url(./pic-2.png);" onclick="openGallery('museum')">
+      <h3>Museum</h3>
+      <p>Walk through history in the Egyptian Museum and others across the country.</p>
+    </div>
+    <div class="card" style="background-image:url(./pic-3.png);" onclick="openGallery('pyramids')">
+      <h3>Pyramids</h3>
+      <p>Marvel at the ancient wonders of the Giza Plateau.</p>
+    </div>
+    <div class="card" style="background-image:url(./pic-4.png);" onclick="openGallery('temples')">
+      <h3>Temples</h3>
+      <p>Visit the sacred temples carved in stone and history.</p>
+    </div>
+  </div>
+  <!-- ===== Modal Gallery ===== -->
+<div id="galleryModal" class="modal" onclick="backdropClose(event)">
+  <div class="modal-content">
+    <span class="close" onclick="closeGallery()">&times;</span>
+
+    <!-- Swiper -->
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper" id="gallerySlides">
+        <!-- slides injected by JS -->
+      </div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Swiper CSS & JS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<style>
+/* Modal */
+.modal{
+  display:none;position:fixed;z-index:999;inset:0;background:rgba(0,0,0,0.9);
+}
+.modal.open{display:block;}
+.modal-content{
+  position:relative;margin:3% auto;width:85%;max-width:900px;
+}
+.close{
+  position:absolute;top:10px;right:20px;color:#fff;font-size:32px;cursor:pointer;z-index:1000;
+}
+/* Swiper */
+.swiper{width:100%;height:500px;border-radius:10px;overflow:hidden;}
+.swiper-slide img{width:100%;height:100%;object-fit:cover;display:block;}
+@media (max-width:768px){.swiper{height:60vh}}
+</style>
+
+<script>
+// ========= إعداد المسار =========
+// لو صورك في فولدر images/ غير السطر ده:
+const IMG_BASE = "task egypt"; // مثال: "images/" لو هتحط الصور هناك
+
+// ========= صور تجريبية (تشتغل فوراً) =========
+// بدّل الروابط دي بصورك (مع الحفاظ على نفس عدد العناصر أو زيادته)
+const galleries = {
+  desert: [
+    // صور مؤقتة (Unsplash) — شغّالة فورًا
+    "",
+    "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1200",
+    "https://images.unsplash.com/photo-1533681018184-68bd1d883546?q=80&w=1200"
+    // مثال لصورك المحلية لاحقًا: IMG_BASE+"desert1.jpg"
+  ],
+  museum: [
+    "https://images.unsplash.com/photo-1549893079-842e4b6b46d9?q=80&w=1200",
+    "https://images.unsplash.com/photo-1520880867055-1e30d1cb001c?q=80&w=1200",
+    "https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?q=80&w=1200"
+  ],
+  pyramids: [
+    "https://images.unsplash.com/photo-1539768942893-daf53e448371?q=80&w=1200",
+    "https://images.unsplash.com/photo-1580651283431-0e1f3fef6f64?q=80&w=1200",
+    "https://images.unsplash.com/photo-1509043759401-136742328bb3?q=80&w=1200"
+  ],
+  temples: [
+    "https://images.unsplash.com/photo-1544989164-31dc3c645987?q=80&w=1200",
+    "https://images.unsplash.com/photo-1578926374373-01c1f5b5f9bf?q=80&w=1200",
+    "https://images.unsplash.com/photo-1589307004173-3c9523f0ad11?q=80&w=1200"
+  ]
+};
+
+// ========= بدائل/حماية من الأخطاء =========
+const FALLBACK_IMG = "data:image/svg+xml;charset=UTF-8,\
+%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='800'%3E%3Crect width='100%25' height='100%25' fill='%23222222'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23aaaaaa' font-family='Arial' font-size='36'%3EImage not found%3C/text%3E%3C/svg%3E";
+
+let swiper;
+
+// افتح الجاليري من أي كارت: openGallery('desert' | 'museum' | 'pyramids' | 'temples')
+function openGallery(name){
+  const list = galleries[name];
+  if(!list || !list.length){ console.warn("No images for", name); return; }
+
+  const slidesContainer = document.getElementById("gallerySlides");
+  slidesContainer.innerHTML = "";
+
+  list.forEach(src => {
+    const slide = document.createElement("div");
+    slide.className = "swiper-slide";
+    const img = document.createElement("");
+    img.loading = "lazy";
+    img.alt = name + " image";
+    // لو هتستخدم صور محلية: img.src = IMG_BASE + src
+    img.src = src.startsWith("") ? src : (IMG_BASE + src);
+    img.onerror = () => { img.src = FALLBACK_IMG; };
+    slide.appendChild(img);
+    slidesContainer.appendChild(slide);
+  });
+
+  const modal = document.getElementById("galleryModal");
+  modal.classList.add("open");
+  document.body.style.overflow = "hidden";
+
+  // امنع تكرار إنشاء السوايبر
+  if(swiper){ swiper.destroy(true, true); }
+  swiper = new Swiper(".mySwiper", {
+    loop: true,
+    autoplay: { delay: 2500, disableOnInteraction: false },
+    pagination: { el: ".swiper-pagination", clickable: true },
+    navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+    // لو عايز Fade بدّل السطرين دول وافتح اللي تحت:
+    // effect: "fade",
+    // fadeEffect: { crossFade: true },
+  });
+
+  // ESC لإغلاق
+  document.addEventListener("keydown", escCloseOnce);
+}
+
+function closeGallery(){
+  document.getElementById("galleryModal").classList.remove("open");
+  document.body.style.overflow = "";
+  if(swiper){ swiper.destroy(true, true); swiper = null; }
+  document.removeEventListener("keydown", escCloseOnce);
+}
+
+// اغلاق عند الضغط خارج المحتوى
+function backdropClose(e){
+  if(e.target.id === "galleryModal"){ closeGallery(); }
+}
+
+// إغلاق بالـ ESC
+function escCloseOnce(e){
+  if(e.key === "Escape"){ closeGallery(); }
+}
+</script>
+
+</section>
+
+  <!-- Landmarks Section -->
+  <section class="landmarks" id="landmarks">
+    <h2>Egypt's Cultural Landmarks</h2>
+    <div class="grid">
+      <div class="box">
+        <img src="./12-4-300x187.jpg" alt="">
+        <div class="overlay">
+          <h3>Museum</h3>
+          <p>The Ashmolean was the first university museum in the world.</p>
+        </div>
+      </div>
+      <div class="box">
+        <img src="./14-3-300x207.jpg" alt="">
+        <div class="overlay">
+          <h3>Sphinx</h3>
+          <p>The Great Sphinx of Giza, guardian of the pyramids.</p>
+        </div>
+      </div>
+      <div class="box">
+        <img src="./13-4-300x191.jpg" alt="">
+        <div class="overlay">
+          <h3>Nile River</h3>
+          <p>The lifeline of Egypt for thousands of years.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hidden Galleries -->
+  <div style="display:none;">
+    <!-- Desert Gallery -->
+    <a href="./desert1.jpg" data-lightbox="desert" data-title="Egypt Desert"></a>
+    <a href="./desert2.jpg" data-lightbox="desert"></a>
+    <a href="./desert3.jpg" data-lightbox="desert"></a>
+    <!-- Museum Gallery -->
+    <a href="./museum1.jpg" data-lightbox="museum" data-title="Egyptian Museum"></a>
+    <a href="./museum2.jpg" data-lightbox="museum"></a>
+    <!-- Pyramids Gallery -->
+    <a href="./pyramid1.jpg" data-lightbox="pyramids" data-title="Giza Pyramids"></a>
+    <a href="./pyramid2.jpg" data-lightbox="pyramids"></a>
+    <!-- Temples Gallery -->
+    <a href="./temple1.jpg" data-lightbox="temples" data-title="Ancient Temple"></a>
+    <a href="./temple2.jpg" data-lightbox="temples"></a>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Egypt Tourism. All rights reserved.</p>
+  </footer>
+
+  <!-- Lightbox JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+  <script>
+    // فتح جاليري معين عند الضغط على الكارت
+    function openGallery(galleryName){
+      document.querySelector('[data-lightbox="'+galleryName+'"]').click();
+    }
+  </script>
+</body>
+</html>
